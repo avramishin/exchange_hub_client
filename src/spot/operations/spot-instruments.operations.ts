@@ -8,6 +8,15 @@ export class SpotInstrumentsOperations {
 
   constructor(private _db: Knex) {}
 
+  async getInstrumentPrice(instrument_id: string) {
+    return await this._db<SpotInstrumentPrice>(
+      this.__TABLE_SPOT_INSTRUMENT_PRICES
+    )
+      .select("ask", "bid")
+      .where({ instrument_id })
+      .first();
+  }
+
   async upsertInstrumentPrices(instrumentPrices: SpotInstrumentPrice[]) {
     const affectedRows = await this._db<SpotInstrumentPrice>(
       this.__TABLE_SPOT_INSTRUMENT_PRICES
@@ -18,13 +27,30 @@ export class SpotInstrumentsOperations {
     return affectedRows;
   }
 
-  async removeInstrumentPrices(ids: string[]) {
+  async removeInstrumentPricesByIds(ids: string[]) {
     const affectedRows = await this._db<SpotInstrumentPrice>(
       this.__TABLE_SPOT_INSTRUMENT_PRICES
     )
       .whereIn("instrument_id", ids)
       .delete();
     return affectedRows;
+  }
+
+  async removeAllInstrumentPrices() {
+    const affectedRows = await this._db<SpotInstrumentPrice>(
+      this.__TABLE_SPOT_INSTRUMENT_PRICES
+    ).delete();
+    return affectedRows;
+  }
+
+  async getAllInstruments() {
+    return await this._db<SpotInstrument>(this.__TABLE_SPOT_INSTRUMENTS);
+  }
+
+  async getInstrument(instrument_id: string) {
+    return await this._db<SpotInstrument>(this.__TABLE_SPOT_INSTRUMENTS)
+      .where({ instrument_id })
+      .first();
   }
 
   async upsertInstruments(instruments: SpotInstrument[]) {
@@ -34,6 +60,22 @@ export class SpotInstrumentsOperations {
       .insert(instruments)
       .onConflict("instrument_id")
       .merge();
+    return affectedRows;
+  }
+
+  async removeInstrumentsByIds(ids: SpotInstrument[]) {
+    const affectedRows = await this._db<SpotInstrumentPrice>(
+      this.__TABLE_SPOT_INSTRUMENTS
+    )
+      .whereIn("instrument_id", ids)
+      .delete();
+    return affectedRows;
+  }
+
+  async removeAllInstruments() {
+    const affectedRows = await this._db<SpotInstrument>(
+      this.__TABLE_SPOT_INSTRUMENTS
+    ).delete();
     return affectedRows;
   }
 }

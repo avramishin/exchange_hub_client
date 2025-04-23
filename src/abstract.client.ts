@@ -19,12 +19,12 @@ export interface IConnectionDetails {
 export abstract class AbstractClient {
   protected _db: Knex;
 
-  constructor(connection: IConnectionDetails) {
+  constructor(conn: IConnectionDetails) {
     this._db = knex({
       client: "cockroachdb",
       asyncStackTraces: true,
       compileSqlOnError: true,
-      connection,
+      connection: conn,
     });
   }
 }

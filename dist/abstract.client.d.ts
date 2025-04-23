@@ -16,5 +16,5 @@ export interface IConnectionDetails {
 }
 export declare abstract class AbstractClient {
     protected _db: Knex;
-    constructor(connection: IConnectionDetails);
+    constructor(conn: IConnectionDetails);
 }
