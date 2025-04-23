@@ -6,8 +6,8 @@ export declare class SpotOrdersOperations {
     constructor(_db: Knex);
     getOpenOrder(order_id: string): Promise<SpotOpenOrder>;
     getAllOpenOrders(): Promise<SpotOpenOrder[]>;
-    getOpenOrdersByUserId(user_id: string): Promise<SpotOpenOrder[]>;
-    getOpenOrdersByInstrumentId(instrument_id: string): Promise<SpotOpenOrder[]>;
+    getOpenOrdersByUser(user_id: string): Promise<SpotOpenOrder[]>;
+    getOpenOrdersByInstrument(instrument_id: string): Promise<SpotOpenOrder[]>;
     upsertOpenOrders(openOrders: SpotOpenOrder[]): Promise<number[]>;
     removeOpenOrdersByIds(ids: string[]): Promise<number>;
     removeAllOpenOrders(): Promise<number>;

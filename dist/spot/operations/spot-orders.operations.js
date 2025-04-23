@@ -16,12 +16,12 @@ class SpotOrdersOperations {
     async getAllOpenOrders() {
         return await this._db(this.__TABLE_SPOT_OPEN_ORDERS);
     }
-    async getOpenOrdersByUserId(user_id) {
+    async getOpenOrdersByUser(user_id) {
         return await this._db(this.__TABLE_SPOT_OPEN_ORDERS).where({
             user_id,
         });
     }
-    async getOpenOrdersByInstrumentId(instrument_id) {
+    async getOpenOrdersByInstrument(instrument_id) {
         return await this._db(this.__TABLE_SPOT_OPEN_ORDERS).where({
             instrument_id,
         });
