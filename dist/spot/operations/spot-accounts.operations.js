@@ -1,10 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SpotClient = void 0;
-const abstract_client_1 = require("../abstract-client");
-class SpotClient extends abstract_client_1.AbstractClient {
-    constructor(connection) {
-        super(connection);
+exports.SpotAccountsOperations = void 0;
+class SpotAccountsOperations {
+    constructor(_db) {
+        this._db = _db;
         this.__TABLE_SPOT_ACCOUNTS = "spot_accounts";
     }
     async updateAccountBalance(account_id, balance) {
@@ -15,12 +14,12 @@ class SpotClient extends abstract_client_1.AbstractClient {
             .where({ account_id });
         return affectedRows;
     }
-    async upsertAccounts(account) {
-        const result = await this._db(this.__TABLE_SPOT_ACCOUNTS)
-            .insert(account)
+    async upsertAccounts(accounts) {
+        const affectedRows = await this._db(this.__TABLE_SPOT_ACCOUNTS)
+            .insert(accounts)
             .onConflict("account_id")
             .merge();
-        return result;
+        return affectedRows;
     }
 }
-exports.SpotClient = SpotClient;
+exports.SpotAccountsOperations = SpotAccountsOperations;

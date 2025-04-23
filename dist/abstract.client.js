@@ -8,7 +8,7 @@ const knex_1 = __importDefault(require("knex"));
 class AbstractClient {
     constructor(connection) {
         this._db = (0, knex_1.default)({
-            client: "pg",
+            client: "cockroachdb",
             asyncStackTraces: true,
             compileSqlOnError: true,
             connection,

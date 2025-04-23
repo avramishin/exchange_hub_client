@@ -21,7 +21,7 @@ export abstract class AbstractClient {
 
   constructor(connection: IConnectionDetails) {
     this._db = knex({
-      client: "pg",
+      client: "cockroachdb",
       asyncStackTraces: true,
       compileSqlOnError: true,
       connection,
